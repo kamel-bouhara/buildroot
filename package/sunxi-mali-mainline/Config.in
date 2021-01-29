@@ -18,6 +18,24 @@ config BR2_PACKAGE_PROVIDES_LIBGLES
 	default "sunxi-mali-mainline"
 
 choice
+	prompt "Output"
+
+config BR2_PACKAGE_SUNXI_MALI_MAINLINE_OUTPUT_FBDEV
+	bool "fbdev"
+
+config BR2_PACKAGE_SUNXI_MALI_MAINLINE_OUTPUT_WAYLAND
+	bool "wayland"
+	depends on BR2_PACKAGE_WAYLAND
+
+config BR2_PACKAGE_SUNXI_MALI_MAINLINE_OUTPUT_X11_DMABUF
+	bool "x11 dma-buf"
+
+config BR2_PACKAGE_SUNXI_MALI_MAINLINE_OUTPUT_X11_UMP
+	bool "x11 ump"
+
+endchoice
+
+choice
 	prompt "Version"
 	default BR2_PACKAGE_SUNXI_MALI_MAINLINE_R6P2
 	help
@@ -27,8 +45,16 @@ config BR2_PACKAGE_SUNXI_MALI_MAINLINE_R6P2
 	bool "r6p2"
 config BR2_PACKAGE_SUNXI_MALI_MAINLINE_R8P1
 	bool "r8p1"
+	depends on BR2_PACKAGE_SUNXI_MALI_MAINLINE_OUTPUT_FBDEV
 
 endchoice
+
+config BR2_PACKAGE_SUNXI_MALI_MAINLINE_OUTPUT
+       string
+       default "fbdev"		if BR2_PACKAGE_SUNXI_MALI_MAINLINE_OUTPUT_FBDEV
+       default "wayland"	if BR2_PACKAGE_SUNXI_MALI_MAINLINE_OUTPUT_WAYLAND
+       default "x11_dma_buf" 	if BR2_PACKAGE_SUNXI_MALI_MAINLINE_OUTPUT_X11_DMABUF
+       default "x11_ump"     	if BR2_PACKAGE_SUNXI_MALI_MAINLINE_OUTPUT_X11_UMP
 
 config BR2_PACKAGE_SUNXI_MALI_MAINLINE_REVISION
 	string
