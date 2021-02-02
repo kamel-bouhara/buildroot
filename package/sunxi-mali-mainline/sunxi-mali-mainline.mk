@@ -38,6 +38,7 @@ endif
 
 ifeq ($(BR2_PACKAGE_SUNXI_MALI_MAINLINE_OUTPUT_WAYLAND),y)
 SUNXI_MALI_MAINLINE_DEPENDENCIES += wayland
+SUNXI_MALI_MAINLINE_PROVIDES += libgbm
 endif
 
 # FIXME: install gbm.pc conditionally

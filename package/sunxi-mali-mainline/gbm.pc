@@ -1,0 +1,12 @@
+prefix=/usr
+exec_prefix=/usr
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: gbm
+Description: ARM Mali implementation of gbm
+Requires.private: 
+Version: 1.0
+Libs: -L${libdir} -lgbm
+Libs.private: 
+Cflags: -I${includedir}
