@@ -58,6 +58,15 @@ config BR2_PACKAGE_SDL2_OPENGLES
 comment "OpenGL ES support needs an OpenGL ES provider"
 	depends on !BR2_PACKAGE_HAS_LIBGLES
 
+config BR2_PACKAGE_SDL2_TESTS
+	bool "SDL2 Tests applications"
+	depends on BR2_PACKAGE_SDL2_OPENGLES
+	depends on BR2_PACKAGE_SDL2_KMSDRM
+
+comment "SDL2 Tests applications needs SDL2 OpenGL/ES and KMS/DRM support"
+	depends on !BR2_PACKAGE_SDL2_OPENGLES
+	depends on !BR2_PACKAGE_SDL2_KMSDRM
+
 endif
 
 comment "sdl2 needs a toolchain w/ dynamic library"

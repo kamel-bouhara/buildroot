@@ -30,6 +30,17 @@ define SDL2_REMOVE_SDL2_CONFIG_CMAKE
 endef
 SDL2_POST_INSTALL_STAGING_HOOKS += SDL2_REMOVE_SDL2_CONFIG_CMAKE
 
+ifeq ($(BR2_PACKAGE_SDL2_TESTS),y)
+define SDL2_BUILD_TESTS
+	cd $(@D)/test && PATH=$(BR_PATH) ./configure $(TARGET_CONFIGURE_OPTS) \
+		--prefix=/usr \
+		--host="$(GNU_TARGET_NAME)"  
+	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D)/test
+	$(TARGET_MAKE_ENV) $(MAKE) DESTDIR="$(TARGET_DIR)" -C $(@D)/test install
+endef
+SDL2_POST_BUILD_HOOKS += SDL2_BUILD_TESTS
+endif
+
 # We must enable static build to get compilation successful.
 SDL2_CONF_OPTS += --enable-static
 
